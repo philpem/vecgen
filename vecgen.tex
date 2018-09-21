@@ -1,0 +1,47 @@
+\documentclass[a4paper]{hitec}
+\title{Hitch-Hacker's Guide to the Atari Digital Vector Generator}
+\author{Philip Pemberton}
+\company{http://www.philpem.me.uk/}
+%\confidential{\textbf{-- Unlimited Distribution --}}
+
+\usepackage[pdfstartview=FitH]{hyperref} % This line is readily ommited of it makes trouble
+\usepackage{alnumsec}
+\alnumsecstyle{aar}
+
+% this lets us create overlined text
+\newcommand\oline[1]{\vbox{\hrule height 1pt\vskip 1pt\hbox{#1}}}
+
+% extensions to the "tabular" module
+\usepackage{tabularx}
+\usepackage{tabulary}
+
+% lets us have multi-row table cells
+\usepackage{multirow}
+
+% Vaucanson-G automata modelling (state transition diagrams)
+\usepackage{vaucanson-g}
+
+% This is so we can subscript text
+\usepackage{subscript}
+% And this makes the command a little shorter :)
+\newcommand\tsub[1]{\textsubscript{#1}}
+
+% This is so we can rotate tables and figures
+\usepackage{rotating}
+
+\renewcommand{\thesection}{\arabic{section}}
+
+\begin{document}
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{00intro}					% Introduction
+\input{01conven}				% Typesetting conventions
+\input{02whatis}				% So what is the DVG?
+\input{03coord}					% Coordinate System
+\input{04reset}					% Reset Sequence
+\input{05opcodes}				% Opcodes
+\input{06state}					% State diagram
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}

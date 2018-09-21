@@ -1,0 +1,63 @@
+\section{State Diagram}
+A state diagram for the DVG is shown in Figure~\ref{dvgstate}.
+\begin{sidewaysfigure}[ht]
+\centering
+%\ShowFrame\ShowGrid
+\begin{VCPicture}{(0,0)(20,12)}
+	% config
+	\ChgStateLabelScale{0.5}
+	\ChgEdgeLabelScale{0.5}
+	% states
+	\FixStateDiameter{2.3cm}
+	\State[Halt~strobe~(B)]{(11,11)}{B}
+	\State[Reset~(0)]{(6,11)}{0}
+	\State[1]{(15,6)}{1}
+	\State[2]{(12,8)}{2}
+	\State[DMA~push~(8)]{(2,8)}{8}
+	\State[DMA~load~(9)]{(6,8)}{9}
+	\State[Go~strobe~(A)]{(10,2)}{A}
+	\State[Latch~0~(C)]{(3,4)}{C}
+	\State[Latch~1~(D)]{(10,5)}{D}
+	\State[Latch~2~(E)]{(18,2)}{E}
+	\State[Latch~3~(F)]{(14,2)}{F}
+	\SmallState
+	\State[3]{(7,4)}{3}
+	\State[4]{(5,3)}{4}
+	\State[5]{(6,3)}{5}
+	\State[6]{(7,3)}{6}
+	\State[7]{(8,3)}{7}
+	% transitions
+	\EdgeL{0}{9}{not~halted}
+	\EdgeL{4}{5}{}
+	\EdgeL{5}{6}{}
+	\EdgeL{6}{7}{}
+	\ArcR{7}{D}{}
+	\ArcL{9}{D}{}
+	\ArcL{3}{D}{}
+	\ArcL{A}{1}{}
+	\EdgeL{F}{E}{}
+	\ArcL{8}{9}{not~halted}
+	\ArcR{B}{0}{not~LABS}
+	\ArcR{1}{2}{not~halted}
+	\ArcL{C}{9}{JMP,RTS}
+	\ArcR{2}{D}{}
+	\ArcR{D}{C}{}
+% the new one -- added 2006-01-22 to fix an.. er.. bug. :)
+	\ArcR{B}{D}{LABS}
+	\VArcR{arcangle=-35}{E}{A}{not~LABS}
+% FIXME: SVEC looks like it belongs to VCTR~or~LABS, move label above the arc
+	\VArcR{arcangle=-45, ncurv=0.4}{C}{A}{SVEC}
+% FIXME: VCTR~or~LABS is hard to see, move label above the arc
+	\VArcR{arcangle=-65, ncurv=0.55}{C}{F}{VCTR~or~LABS}
+	\VArcR{arcangle=-60, ncurv=0.7}{E}{B}{LABS~(load~mode)}
+	\VArcL{arcangle=60, ncurv=0.75}{8}{B}{HALT~(halt~mode)}
+	% loops
+\renewcommand{\LoopOnLargeState}{3.8}
+\renewcommand{\CLoopOnLargeState}{4}
+\LargeState
+	\CLoopW[0.8]{0}{halted}
+	\CLoopE{1}{halted}
+\end{VCPicture}
+\caption{State transition diagram for the Atari DVG}
+\label{dvgstate}
+\end{sidewaysfigure}

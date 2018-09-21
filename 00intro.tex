@@ -1,0 +1,45 @@
+\section{Introduction}
+Over the past few years, interest in the emulation of video games has been
+increasing rapidly. Modern computer hardware has allowed arcade games like
+Asteroids and Star Wars to be accurately simulated on a commonly-available
+home computer system. Although Asteroids was one of the first games to be
+emulated, very little documentation exists on the hardware, beyond the memory
+maps and notes in the MAME source code.
+
+One of the more unusual parts of the Asteroids hardware is the Digital Vector
+Generator, shown on Sheet 2A of the Asteroids schematic set. Outside of Atari,
+very little documentation exists on it. In this article, I will explain how
+the DVG works, and how to write code for it.
+
+This article is intended to supplement the notes included in the Asteroids
+schematics, not replace them. It also concentrates more on the programming side
+of the DVG, rather than attempting to explain the complexities of the DVG
+circuitry.
+
+\section{Thanks and Acknowledgements}
+Thanks are due to the following people, who assisted (either directly or
+indirectly) in the creation of this document:
+
+\begin{itemize}
+	\item{{\bf Jed Margolin} (\url{http://www.jmargolin.com}) --- Wrote the
+article ``The Secret Lives of Vector Generators'', which explains some of the
+inner workings of the Atari AVG and DVG. He also explained (in an e-mail) how
+the DVG represents coordinates.}
+
+ 	\item{{\bf Howard Delman} (\url{http://www.rawbw.com/~delman/}) --- Designer of
+the DVG. Answered a few technical questions on the DVG hardware.}
+
+ 	\item{{\bf Chris Pile} (\url{http://web.archive.org/*/http://members.tripod.com/asteroids/}) --- Documented
+part of the DVG, and published his notes online (filename: {\tt roidinfo.zip}).
+Note that the original site has ceased to exist, hence the link to the Web
+Archive mirror of the same page.}
+
+ 	\item{{\bf Eric Smith} (\url{http://www.brouhaha.com/~eric/} --- Released
+the source code to the VECSIM emulator, which was used to get a basic overview
+of the DVG instruction set.}
+\end{itemize}
+
+\subsection{Change log}
+\begin{itemize}
+  \item{{\bf 18 September 2006}: Added documentation on the '00h' instruction opcode.}
+\end{itemize}

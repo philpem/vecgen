@@ -1,0 +1,19 @@
+\section{Coordinate System}
+Absolute coordinates in DVG terms are expressed as binary numbers from 0 to
+1023 in the form {\tt (x, y)}, where {\tt (0, 0)} is the top-left of the screen
+area, {\tt (511, 511)} is the centre of the screen, and {\tt (1023, 1023)} is
+the bottom-right of the screen area.
+
+Relative coordinates are expressed in sign-magnitude form, and are processed
+using binary normalisation to ensure that the vectors they represent are drawn
+as fast as possible. Sign-magnitude form stores the absolute value of the
+number in the least significant bits, and the sign in the most significant bit.
+The sign bit on the DVG is high when a number is negative. As a consequence of
+this, there are two ways to represent zero. Relative coordinates are used by
+all the vector drawing instructions.
+
+Absolute coordinates are expressed in two's complement form. When the most
+significant bit is set, the number is taken to be negative. To convert a
+negative number back into its absolute value, invert all the bits in the word
+and add one to the result. Absolute coordinates are only used by the {\tt LABS}
+instruction.

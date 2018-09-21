@@ -1,0 +1,36 @@
+\section{Reset Sequence}
+When the DVG's \oline{RESET} input goes active, the following actions are
+performed by the DVG circuitry at roughly the same time:
+
+\begin{itemize}
+	\item{Instruction latch {\tt F7} and Y offset latch {\tt H7} are cleared to zero}
+	\item{State flip-flop {\tt D8} is cleared to zero}
+	\item{{\tt HALT} flip-flop {\tt A9} is set; {\tt HALT} and {\tt \oline{HALT}} go active}
+\end{itemize}
+
+The DVG will hold in state 0 until the 6502 asserts the {\tt \oline{DMAGO}}
+line. This resets the {\tt HALT} flip-flop, causing {\tt HALT} and
+{\tt \oline{HALT}} to be deasserted, thus releasing the halt state and allowing
+the state machine to begin executing opcodes from the vector instruction memory.
+
+Once the DVG is released from the halt state, it will execute a {\tt DMALD}
+micro-instruction, which loads the program counter from {\tt DVY[11..0]}. As
+DVY has been cleared to zero during reset, the program counter will be set to
+zero.
+
+After the program counter has been reset, the state machine will load the
+instruction latch, then the {\tt DVY} latch. The program counter will be
+incremented after the {\tt DVY} latch has been loaded. If an opcode for a
+two-word instruction has been loaded into the instruction latch, the {\tt SCALE}
+and {\tt DVX} latches will also be loaded from the vector program memory, and
+the program counter will be incremented again.
+
+% >{\raggedleft} for right align
+% >{\centering} for center align
+%\begin{tabularx}{\linewidth}{|c|c|c|X|}
+%	\hline
+%	{\bf State}		&	{\bf Next state}		&	{\bf Signal}		&	{\bf Action}				\tabularnewline	\hline
+%	$0$				&	$9$						&	DMALD				&	Load PC with DVY			\tabularnewline	\hline
+%\end{tabularx}
+
+%% TODO: reference state diagram, and maybe create state diagram?

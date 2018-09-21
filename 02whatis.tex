@@ -1,0 +1,19 @@
+\section{So what is the DVG?}
+The Digital Vector Generator --- or DVG --- is a custom-designed CPU, built
+entirely from small-scale TTL ICs. It has an architecture totally unlike that
+of any CPU that existed at the time, and was designed specifically to drive
+vector-beam monitors. This was done because no CPU available at the time
+Asteroids was designed had enough power to manage game logic and draw vectors
+at the same time. Offloading the task of drawing the display on to the DVG
+allows the CPU to be dedicated to the task of running the game logic.
+
+The DVG features:
+\begin{itemize}
+	\item{12-bit program counter, with 13-bit address space}
+	\item{Four-level stack}
+	\item{State machine microsequencer with eight micro-instructions}
+	\item{Vector timer}
+	\item{Two 12-bit binary rate multipliers to vary the timing relationship between the X and Y vectors}
+	\item{16-level brightness control}
+	\item{1024x1024 display resolution}
+\end{itemize}

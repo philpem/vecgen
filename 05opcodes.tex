@@ -1,0 +1,335 @@
+% A command that's useful for saving typing
+\newcommand{\opcodeentry}[3]{
+	\addcontentsline{toc}{subsection}{#1 --- #2}
+	\index{Opcodes!#1 (#2)}
+	\index{Mnemonics!#2 (#1)}
+	\begin{center}
+		\begin{tabular*}{1\textwidth}{@{\extracolsep{\fill}} | l r | }
+			\hline
+				& \\[-7pt]
+				\multirow{2}{*}{\huge\bf #1}			&	{\large\bf #3}	\\
+														&	{\large\bf #2}	\\
+			\hline
+	   	\end{tabular*}
+	\end{center}
+}
+
+\newcommand{\mcol}[1]{
+	\multicolumn{1}{c}{#1}
+}
+
+\newcommand{\mcolb}[1]{
+	\multicolumn{1}{|c|}{#1}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Save parindent
+\newlength{\savedparindent}
+\setlength{\savedparindent}{\parindent}
+
+% Switch off parindent
+\setlength{\parindent}{0mm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Opcodes}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% VCTR: 00h-09h
+
+\begin{minipage}{\textwidth}   \setlength{\parindent}{\savedparindent}
+\opcodeentry{VCTR}{Draw Long Vector}{Opcodes 00h -- 09h}
+%{\bf Encoding:}
+\begin{tabular*}{1\textwidth}{@{\extracolsep{\fill}} |c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+	\multicolumn{16}{ c }{\bf Word 0} \\
+	\mcol{15} & \mcol{14} & \mcol{13} & \mcol{12} & \mcol{11} & \mcol{10} & \mcol{9} & \mcol{8} & \mcol{7} & \mcol{6} & \mcol{5} & \mcol{4} & \mcol{3} & \mcol{2} & \mcol{1} & \mcol{0} \\ \hline
+	\multicolumn{4}{|c|}{OP[3..0]}	& 0		& Y\tsub{S}	& \multicolumn{10}{c|}{Y[9..0]} \\ \hline
+\end{tabular*}
+\\
+\vspace{2 mm}
+\\
+\begin{tabular*}{1\textwidth}{@{\extracolsep{\fill}} |c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+	\multicolumn{16}{ c }{\bf Word 1} \\
+	\mcol{15} & \mcol{14} & \mcol{13} & \mcol{12} & \mcol{11} & \mcol{10} & \mcol{9} & \mcol{8} & \mcol{7} & \mcol{6} & \mcol{5} & \mcol{4} & \mcol{3} & \mcol{2} & \mcol{1} & \mcol{0} \\ \hline
+	\multicolumn{4}{|c|}{Z[3..0]}	& 0		& X\tsub{S}	& \multicolumn{10}{c|}{X[9..0]} \\ \hline
+\end{tabular*} \\ \\
+%%
+{\bf Operands:}
+
+\begin{tabular}{ l l }
+	{\bf OP[3..0]}	&	Opcode nibble.		\\
+	{\bf Y\tsub{S}}	&	Y axis sign bit.	\\
+	{\bf Y[9..0]}	&	Y axis position.	\\
+	{\bf X\tsub{S}}	&	X axis sign bit.	\\
+	{\bf X[9..0]}	&	X axis position.	\\
+	{\bf Z[3..0]}	&	Vector intensity.	\\
+\end{tabular} \\
+%%
+
+Draws a vector from the current X and Y position to the position specified by
+{\tt X[9..0]} and {\tt Y[9..0]}, with the intensity {\tt Z[3..0]}. X and Y are
+binary normalised, and the opcode value specifies the number of bits they have
+been shifted.
+
+The following table illustrates how the length divisor and bit shift count
+relate to the opcode value:
+
+\begin{tabular}{|l|l|l|}
+	\hline
+	{\bf Opcode}	&	{\bf Divisor}	&	{\bf Bits shifted}	\\ \hline
+	09h				&	1				&	0					\\ \hline
+	08h				&	2				&	1					\\ \hline
+	07h				&	4				&	2					\\ \hline
+	06h				&	8				&	3					\\ \hline
+	05h				&	16				&	4					\\ \hline
+	04h				&	32				&	5					\\ \hline
+	03h				&	64				&	6					\\ \hline
+	02h				&	128				&	7					\\ \hline
+	01h				&	256				&	8					\\ \hline
+	00h				&	512				&	9					\\ \hline
+\end{tabular}
+
+For example, if a vector is drawn using opcode 09h, it will be drawn at the
+exact length specified in the VCTR instruction. If that same vector is drawn
+again using opcode 08h, it will be drawn half as long. The same rule applies to
+all the other VCTR opcodes.
+
+\vspace{1 cm}
+\end{minipage}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% LABS: 0Ah
+
+\begin{minipage}{\textwidth}   \setlength{\parindent}{\savedparindent}
+\opcodeentry{LABS}{Load Absolute}{Opcode 0Ah}
+%{\bf Encoding:}
+\begin{tabular*}{1\textwidth}{@{\extracolsep{\fill}} |c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+	\multicolumn{16}{ c }{\bf Word 0} \\
+	\mcol{15} & \mcol{14} & \mcol{13} & \mcol{12} & \mcol{11} & \mcol{10} & \mcol{9} & \mcol{8} & \mcol{7} & \mcol{6} & \mcol{5} & \mcol{4} & \mcol{3} & \mcol{2} & \mcol{1} & \mcol{0} \\ \hline
+	\multicolumn{4}{|c|}{OP[3..0]}	& 0		& Y\tsub{S}	& \multicolumn{10}{c|}{Y[9..0]} \\ \hline
+\end{tabular*}
+\\
+\vspace{2 mm}
+\\
+\begin{tabular*}{1\textwidth}{@{\extracolsep{\fill}} |c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+	\multicolumn{16}{ c }{\bf Word 1} \\
+	\mcol{15} & \mcol{14} & \mcol{13} & \mcol{12} & \mcol{11} & \mcol{10} & \mcol{9} & \mcol{8} & \mcol{7} & \mcol{6} & \mcol{5} & \mcol{4} & \mcol{3} & \mcol{2} & \mcol{1} & \mcol{0} \\ \hline
+	\multicolumn{4}{|c|}{SF[3..0]}	& 0		& X\tsub{S}	& \multicolumn{10}{c|}{X[9..0]} \\ \hline
+\end{tabular*} \\ \\
+%%
+{\bf Operands:}
+
+\begin{tabular}{ l l }
+	{\bf OP[3..0]}	&	Opcode nibble.			\\
+	{\bf Y\tsub{S}}	&	Y axis sign bit.		\\
+	{\bf Y[9..0]}	&	Y axis position.		\\
+	{\bf X\tsub{S}}	&	X axis sign bit.		\\
+	{\bf X[9..0]}	&	X axis position.		\\
+	{\bf SF[3..0]}	&	Global scale factor.	\\
+\end{tabular} \\
+%%
+
+Sets the X and Y position counters to the values stored in {\tt X[9..0]} and
+{\tt Y[9..0]} respectively, and sets the global scale factor to the value
+stored in {\tt SF[3:0]}.
+
+The global scale factor is applied to all vectors drawn after the LABS
+instruction is executed, and decodes as follows:
+
+\begin{tabular}{|l|l l|}
+	\hline
+	{\bf Global scale}	&	\multicolumn{2}{l|}{\bf Scale factor}	\\ \hline
+	1111b				&	/ 2				&	(divide by 2)		\\ \hline
+	1110b				&	/ 4				&	(divide by 4)		\\ \hline
+	1101b				&	/ 8				&	(divide by 8)		\\ \hline
+	1100b				&	/ 16			&	(divide by 16)		\\ \hline
+	1011b				&	/ 32			&	(divide by 32)		\\ \hline
+	1010b				&	/ 64			&	(divide by 64)		\\ \hline
+	1001b				&	/ 128			&	(divide by 128)		\\ \hline
+	1000b				&	/ 256?			&	{\bf (unconfirmed)}	\\ \hline
+	0000b				&	Zero?			&	{\bf (unconfirmed)}	\\ \hline
+	0001b				&	* 2				&	(multiply by 2)		\\ \hline
+	0010b				&	* 4				&	(multiply by 4)		\\ \hline
+	0011b				&	* 8				&	(multiply by 8)		\\ \hline
+	0100b				&	* 16			&	(multiply by 16)	\\ \hline
+	0101b				&	* 32			&	(multiply by 32)	\\ \hline
+	0110b				&	* 64			&	(multiply by 64)	\\ \hline
+	0111b				&	* 128			&	(multiply by 128)	\\ \hline
+\end{tabular}
+
+When a vector is drawn, the global scale factor is used to provide additional
+scaling. In the case of Asteroids, this means that only one asteroid image has
+to be stored in memory; the global scale factor allows that image to be
+expanded or contracted as required.
+
+\vspace{1 cm}
+\end{minipage}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% HALT: 0Bh
+
+\begin{minipage}{\textwidth}   \setlength{\parindent}{\savedparindent}
+\opcodeentry{HALT}{Halt}{Opcode 0Bh}
+%{\bf Encoding:}
+\begin{tabular*}{1\textwidth}{@{\extracolsep{\fill}} |c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+	\multicolumn{16}{ c }{\bf Word 0} \\
+	\mcol{15} & \mcol{14} & \mcol{13} & \mcol{12} & \mcol{11} & \mcol{10} & \mcol{9} & \mcol{8} & \mcol{7} & \mcol{6} & \mcol{5} & \mcol{4} & \mcol{3} & \mcol{2} & \mcol{1} & \mcol{0} \\ \hline
+	\multicolumn{4}{|c|}{OP[3..0]}	& 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\ \hline
+\end{tabular*} \\ \\
+%%
+{\bf Operands:}
+
+\begin{tabular}{ l l }
+	{\bf OP[3..0]}	&	Opcode nibble.			\\
+\end{tabular} \\
+%%
+
+Halts the vector generator and blanks the screen.
+
+\vspace{1 cm}
+\end{minipage}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% JSRL: 0Ch
+
+\begin{minipage}{\textwidth}   \setlength{\parindent}{\savedparindent}
+\opcodeentry{JSRL}{Jump to subroutine}{Opcode 0Ch}
+%{\bf Encoding:}
+\begin{tabular*}{1\textwidth}{@{\extracolsep{\fill}} |c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+	\multicolumn{16}{ c }{\bf Word 0} \\
+	\mcol{15} & \mcol{14} & \mcol{13} & \mcol{12} & \mcol{11} & \mcol{10} & \mcol{9} & \mcol{8} & \mcol{7} & \mcol{6} & \mcol{5} & \mcol{4} & \mcol{3} & \mcol{2} & \mcol{1} & \mcol{0} \\ \hline
+	\multicolumn{4}{|c|}{OP[3..0]}	& \multicolumn{12}{c|}{A[11..0]} \\ \hline
+\end{tabular*} \\ \\
+%%
+{\bf Operands:}
+
+\begin{tabular}{ l l }
+	{\bf OP[3..0]}	&	Opcode nibble.			\\
+	{\bf A[11..0]}	&	Target address.			\\
+\end{tabular} \\
+%%
+
+Pushes the current value of the program counter onto the stack and sets the
+program counter to the address stored in {\tt A[11..0]}.
+
+\vspace{1 cm}
+\end{minipage}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% RTSL: 0Dh
+
+\begin{minipage}{\textwidth}   \setlength{\parindent}{\savedparindent}
+\opcodeentry{RTSL}{Return from subroutine}{Opcode 0Dh}
+%{\bf Encoding:}
+\begin{tabular*}{1\textwidth}{@{\extracolsep{\fill}} |c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+	\multicolumn{16}{ c }{\bf Word 0} \\
+	\mcol{15} & \mcol{14} & \mcol{13} & \mcol{12} & \mcol{11} & \mcol{10} & \mcol{9} & \mcol{8} & \mcol{7} & \mcol{6} & \mcol{5} & \mcol{4} & \mcol{3} & \mcol{2} & \mcol{1} & \mcol{0} \\ \hline
+	\multicolumn{4}{|c|}{OP[3..0]}	& 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\ \hline
+\end{tabular*} \\ \\
+%%
+{\bf Operands:}
+
+\begin{tabular}{ l l }
+	{\bf OP[3..0]}	&	Opcode nibble.			\\
+\end{tabular} \\
+%%
+
+Pulls an address off of the stack and loads it into the program counter.
+
+\vspace{1 cm}
+\end{minipage}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% JMPL: 0Eh
+
+\begin{minipage}{\textwidth}   \setlength{\parindent}{\savedparindent}
+\opcodeentry{JMPL}{Jump}{Opcode 0Eh}
+%{\bf Encoding:}
+\begin{tabular*}{1\textwidth}{@{\extracolsep{\fill}} |c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+	\multicolumn{16}{ c }{\bf Word 0} \\
+	\mcol{15} & \mcol{14} & \mcol{13} & \mcol{12} & \mcol{11} & \mcol{10} & \mcol{9} & \mcol{8} & \mcol{7} & \mcol{6} & \mcol{5} & \mcol{4} & \mcol{3} & \mcol{2} & \mcol{1} & \mcol{0} \\ \hline
+	\multicolumn{4}{|c|}{OP[3..0]}	& \multicolumn{12}{c|}{A[11..0]} \\ \hline
+\end{tabular*} \\ \\
+%%
+{\bf Operands:}
+
+\begin{tabular}{ l l }
+	{\bf OP[3..0]}	&	Opcode nibble.			\\
+	{\bf A[11..0]}	&	Target address.			\\
+\end{tabular} \\
+%%
+
+Sets the program counter to the address stored in {\tt A[11..0]} but, unlike
+{\tt JSRL}, does not push the return address on to the stack.
+
+\vspace{1 cm}
+\end{minipage}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% SVEC: 0Fh
+
+\begin{minipage}{\textwidth}   \setlength{\parindent}{\savedparindent}
+\opcodeentry{SVEC}{Draw Short Vector}{Opcode 0Fh}
+%{\bf Encoding:}
+\begin{tabular*}{1\textwidth}{@{\extracolsep{\fill}} |c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+	\multicolumn{16}{ c }{\bf Word 0} \\
+	\mcol{15} & \mcol{14} & \mcol{13} & \mcol{12} & \mcol{11} & \mcol{10} & \mcol{9} & \mcol{8} & \mcol{7} & \mcol{6} & \mcol{5} & \mcol{4} & \mcol{3} & \mcol{2} & \mcol{1} & \mcol{0} \\ \hline
+	\multicolumn{4}{|c|}{OP[3..0]}	& SF0	&	X\tsub{S}	&	\multicolumn{2}{c}{X[1..0]}	&	\multicolumn{4}{|c|}{Z[3..0]}	&	SF1	&	Y\tsub{S}	&	\multicolumn{2}{c|}{Y[1..0]}	\\ \hline
+\end{tabular*} \\ \\
+%%
+{\bf Operands:}
+
+\begin{tabular}{ l l }
+	{\bf OP[3..0]}	&	Opcode nibble.		\\
+	{\bf X[1..0]}	&	X delta.			\\
+	{\bf X\tsub{S}}	&	X sign.				\\
+	{\bf Y[1..0]}	&	X delta.			\\
+	{\bf Y\tsub{S}}	&	X sign.				\\
+	{\bf Z[3..0]}	&	Vector intensity.	\\
+	{\bf SF[1..0]}	&	Scale factor.		\\
+\end{tabular} \\
+%%
+
+Draws a vector from the current X and Y position to the position specified by
+{\tt X[1..0]} and {\tt Y[1..0]}, with the intensity {\tt Z[3..0]}. This is a
+variant of the VCTR instruction that is usually used for drawing very small
+vectors where absolute accuracy is not required, for example text or numbers.
+
+This instruction performs the same function as a VCTR instruction, but in a
+more compact (and slightly faster) way. {\tt X[1..0]} and {\tt Y[1..0]} in an
+SVEC instruction only contain bits 8 and 9 (the two least significant bits of
+the high byte) of the X and Y addresses. The scale factor decodes as follows:
+
+\begin{tabular}{|l|l|l|}
+	\hline
+	{\bf Scale bits}&	{\bf Divisor}	&	{\bf Bits shifted}	\\ \hline
+	00b	(00d)		&	128				&	7					\\ \hline
+	01b	(01d)		&	64				&	6					\\ \hline
+	10b	(02d)		&	32				&	5					\\ \hline
+	11b	(03d)		&	16				&	4					\\ \hline
+\end{tabular}
+
+This means that the input coordinate values and scale factors decode to the
+following vector lengths:
+
+\begin{tabular}{|l|c|c|c|c|}
+	\hline
+	\multicolumn{1}{|c|}{\bf Scale}	&	\multicolumn{4}{c|}{\bf Input}						\\ \cline{2-5}
+							&	{\bf 00b}	&	{\bf 01b}	&	{\bf 10b}	&	{\bf 11b}	\\ \hline
+	00b (divide by 128)		&	{\bf 0}		&	{\bf 2}		&	{\bf 4}		&	{\bf 6}		\\ \hline
+	01b (divide by 64)		&	{\bf 0}		&	{\bf 4}		&	{\bf 8}		&	{\bf 12}	\\ \hline
+	10b (divide by 32)		&	{\bf 0}		&	{\bf 8}		&	{\bf 16}	&	{\bf 24}	\\ \hline
+	11b (divide by 16)		&	{\bf 0}		&	{\bf 16}	&	{\bf 32}	&	{\bf 48}	\\ \hline
+\end{tabular}
+
+
+\vspace{1 cm}
+\end{minipage}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Restore parindent
+\setlength{\parindent}{\savedparindent}
