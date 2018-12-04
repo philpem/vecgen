@@ -277,17 +277,17 @@ Sets the program counter to the address stored in {\tt A[11..0]} but, unlike
 \begin{tabular*}{1\textwidth}{@{\extracolsep{\fill}} |c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
 	\multicolumn{16}{ c }{\bf Word 0} \\
 	\mcol{15} & \mcol{14} & \mcol{13} & \mcol{12} & \mcol{11} & \mcol{10} & \mcol{9} & \mcol{8} & \mcol{7} & \mcol{6} & \mcol{5} & \mcol{4} & \mcol{3} & \mcol{2} & \mcol{1} & \mcol{0} \\ \hline
-	\multicolumn{4}{|c|}{OP[3..0]}	& SF0	&	X\tsub{S}	&	\multicolumn{2}{c}{X[1..0]}	&	\multicolumn{4}{|c|}{Z[3..0]}	&	SF1	&	Y\tsub{S}	&	\multicolumn{2}{c|}{Y[1..0]}	\\ \hline
+	\multicolumn{4}{|c|}{OP[3..0]}	& SF0	&	Y\tsub{S}	&	\multicolumn{2}{c}{Y[1..0]}	&	\multicolumn{4}{|c|}{Z[3..0]}	&	SF1	&	X\tsub{S}	&	\multicolumn{2}{c|}{X[1..0]}	\\ \hline
 \end{tabular*} \\ \\
 %%
 {\bf Operands:}
 
 \begin{tabular}{ l l }
 	{\bf OP[3..0]}	&	Opcode nibble.		\\
+	{\bf Y[1..0]}	&	Y delta.			\\
+	{\bf Y\tsub{S}}	&	Y sign.				\\
 	{\bf X[1..0]}	&	X delta.			\\
 	{\bf X\tsub{S}}	&	X sign.				\\
-	{\bf Y[1..0]}	&	X delta.			\\
-	{\bf Y\tsub{S}}	&	X sign.				\\
 	{\bf Z[3..0]}	&	Vector intensity.	\\
 	{\bf SF[1..0]}	&	Scale factor.		\\
 \end{tabular} \\
